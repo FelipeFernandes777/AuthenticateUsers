@@ -4,10 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsx ./src/server.ts"
+    "dev": "tsx watch ./src/server.ts"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/dotenv": "^8.2.0",
+    "@types/jsonwebtoken": "^9.0.2",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "dotenv": "^16.0.3",
@@ -24,6 +26,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.2",
     "tsx": "^3.12.7",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vitest": "^0.31.0"
   }
 }

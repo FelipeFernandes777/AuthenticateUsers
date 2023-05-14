@@ -17,8 +17,6 @@ model User {
   password String
   email    String
 
-  role Boolean
-
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
