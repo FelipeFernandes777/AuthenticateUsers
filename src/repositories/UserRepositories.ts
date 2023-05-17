@@ -7,7 +7,11 @@ export class UserRepositories implements IUserRepositories {
   constructor() {}
 
   public async getUsers(): Promise<User[]> {
-    const getUsers = await prisma.user.findMany();
+    const getUsers = await prisma.user.findMany({
+      include: {
+        post: true,
+      },
+    });
 
     return getUsers;
   }
@@ -20,6 +24,19 @@ export class UserRepositories implements IUserRepositories {
     });
 
     return getUserById;
+  }
+
+  public async getPostsUser(userId: string): Promise<any> {
+    const getPosts = await prisma.user.findMany({
+      where: {
+        id: userId,
+      },
+      include: {
+        post: true,
+      },
+    });
+
+    return getPosts;
   }
 
   public async create(

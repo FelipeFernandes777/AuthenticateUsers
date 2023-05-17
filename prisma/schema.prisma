@@ -16,9 +16,25 @@ model User {
   name     String
   password String
   email    String
+  post     Post[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
   @@map("users")
+}
+
+model Post {
+  id     Int     @id @default(autoincrement())
+  userId String?
+
+  title       String
+  content     String
+  description String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  User       User?    @relation(fields: [userId], references: [id])
+
+  @@map("posts")
 }

@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
-import { UserRepositories } from "../repositories/UserRepositorie";
+import { NextFunction, Request, Response } from "express";
+import { UserRepositories } from "../repositories/UserRepositories";
 import { prisma } from "../database";
+import { sign, verify } from "jsonwebtoken";
 
 export class UserServices extends UserRepositories {
   constructor() {
@@ -53,6 +54,22 @@ export class UserServices extends UserRepositories {
     }
   }
 
+  public async getPostForUser(req: Request, res: Response) {
+    const { id } = req.params;
+
+    try {
+      const userRepositories = new UserRepositories();
+
+      const postResults = await userRepositories.getPostsUser(id);
+
+      res.status(200).send(postResults);
+    } catch (error) {
+      res.status(400).send({
+        message: "Bad Request!",
+      });
+    }
+  }
+
   public async getUserById(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
 
@@ -96,6 +113,40 @@ export class UserServices extends UserRepositories {
     } catch (error) {
       res.status(500).send({
         message: "Internal server error!",
+      });
+    }
+  }
+
+  public async singUp(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    const { email, password } = req.body;
+
+    const verifyUserAlredyExists = prisma.user.findMany({
+      where: {
+        email: email,
+        password: password,
+      },
+    });
+
+    if (!verifyUserAlredyExists) {
+      res.status(200).send({
+        message: "Usuario não existe!",
+      });
+    }
+
+    const privateKey = "shhhsaf124";
+    const token = sign({ email: verifyUserAlredyExists }, privateKey);
+
+    const verifyToken = verify(token, privateKey);
+    try {
+      next();
+      res.status(200).send({ message: "Logado" });
+    } catch (error) {
+      res.status(400).send({
+        message: "Bad Request",
       });
     }
   }

@@ -13,8 +13,10 @@ authenticateUsersRoutes
     });
   })
   .post("/register", userController.createUser)
+  .post("/singUp", userController.singUp)
   .get("/list", userController.getUser)
   .get("/list/:id", userController.getUserById)
+  .get("/list/post/:id", userController.getPostForUser)
   .put("/:id", userController.updatedUsers)
   .delete("/:id", userController.deleteUser);
 

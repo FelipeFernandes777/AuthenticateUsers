@@ -3,6 +3,7 @@ import { User } from "@prisma/client";
 export interface IUserRepositories {
   getUsers(): Promise<User[]>;
   getUsersById(userId: string): Promise<User | null>;
+  getPostsUser(userId: string): Promise<any>;
   create(
     userName: string,
     userEmail: string,
