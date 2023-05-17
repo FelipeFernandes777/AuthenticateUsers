@@ -22,4 +22,30 @@ export class PostRepositories implements IPostRepositories {
 
     return postCreated;
   }
+
+  public async update(
+    id: string,
+    title: string,
+    content: string,
+    description?: string | null | undefined
+  ): Promise<void> {
+    await prisma.post.update({
+      where: {
+        id,
+      },
+      data: {
+        title,
+        content,
+        description,
+      },
+    });
+  }
+
+  public async delete(id: string): Promise<void> {
+    await prisma.post.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

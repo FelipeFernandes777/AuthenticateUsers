@@ -7,4 +7,11 @@ export interface IPostRepositories {
     description?: string | null,
     userId?: string | null
   ): Promise<Post>;
+  update(
+    id: string,
+    title: string,
+    content: string,
+    description?: string | null
+  ): Promise<void>;
+  delete(id: string): Promise<void>;
 }
