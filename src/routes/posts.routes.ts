@@ -10,6 +10,7 @@ postsRoutes
       message: "Posts",
     });
   })
+  .get("/list", postsController.listPosts)
   .post("/create", postsController.createPosts)
   .put("/:id", postsController.updatedPost)
   .delete("/:id", postsController.deletePost);

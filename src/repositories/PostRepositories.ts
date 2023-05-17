@@ -5,6 +5,12 @@ import { prisma } from "../database";
 export class PostRepositories implements IPostRepositories {
   constructor() {}
 
+  public async list(): Promise<Post[]> {
+    const listPosts = await prisma.post.findMany();
+
+    return listPosts;
+  }
+
   public async create(
     title: string,
     content: string,

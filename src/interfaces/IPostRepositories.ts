@@ -1,6 +1,7 @@
 import { Post } from "@prisma/client";
 
 export interface IPostRepositories {
+  list(): Promise<Post[]>;
   create(
     title: string,
     content: string,

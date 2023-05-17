@@ -6,6 +6,20 @@ export class PostServices extends PostRepositories {
     super();
   }
 
+  public async listPosts(req: Request, res: Response) {
+    try {
+      const postRepositories = new PostRepositories();
+
+      const posts = await postRepositories.list();
+
+      res.status(200).send(posts);
+    } catch (error) {
+      res.status(400).send({
+        error: "Bad Request!",
+      });
+    }
+  }
+
   public async createPosts(req: Request, res: Response): Promise<void> {
     const { title, content, description, id } = req.body;
 
