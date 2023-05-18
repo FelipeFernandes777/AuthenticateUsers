@@ -6,7 +6,18 @@ export class PostRepositories implements IPostRepositories {
   constructor() {}
 
   public async list(): Promise<Post[]> {
-    const listPosts = await prisma.post.findMany();
+    const listPosts = await prisma.post.findMany({
+      include: {
+        User: {
+          select: {
+            name: true,
+            email: false,
+            id: false,
+            password: false,
+          },
+        },
+      },
+    });
 
     return listPosts;
   }

@@ -7,19 +7,32 @@ export class UserRepositories implements IUserRepositories {
   constructor() {}
 
   public async getUsers(): Promise<User[]> {
-    const getUsers = await prisma.user.findMany({
-      include: {
+    const getUsers: User[] | any[] = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
         post: true,
+        password: false,
       },
     });
+
+    prisma.user.count();
 
     return getUsers;
   }
 
   public async getUsersById(userId: string): Promise<User | null> {
-    const getUserById = prisma.user.findUnique({
+    const getUserById: any = prisma.user.findUnique({
       where: {
         id: userId,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        post: true,
+        password: false,
       },
     });
 
@@ -31,7 +44,11 @@ export class UserRepositories implements IUserRepositories {
       where: {
         id: userId,
       },
-      include: {
+      select: {
+        id: false,
+        name: true,
+        email: true,
+        password: false,
         post: true,
       },
     });
@@ -51,6 +68,12 @@ export class UserRepositories implements IUserRepositories {
         name: userName,
         email: userEmail,
         password: String(passwordHash),
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: false,
       },
     });
 
