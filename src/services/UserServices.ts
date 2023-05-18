@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { UserRepositories } from "../repositories/UserRepositories";
 import { prisma } from "../database";
 import { sign, verify } from "jsonwebtoken";
+import { BadRequest } from "../errors/BadRequest";
+import { DefaultError } from "../errors/DefaultError";
 
 export class UserServices extends UserRepositories {
   constructor() {
@@ -36,7 +38,7 @@ export class UserServices extends UserRepositories {
 
       res.status(201).send({ message: "Usuario Criado!" });
     } catch (error) {
-      res.status(400).send({ message: "Bad Request" });
+      new BadRequest();
     }
   }
 
@@ -48,9 +50,7 @@ export class UserServices extends UserRepositories {
 
       res.status(200).json(user);
     } catch (error) {
-      res.status(500).send({
-        message: "Internal server error",
-      });
+      new DefaultError(500, "Internal server error!");
     }
   }
 
@@ -64,9 +64,7 @@ export class UserServices extends UserRepositories {
 
       res.status(200).send(postResults);
     } catch (error) {
-      res.status(400).send({
-        message: "Bad Request!",
-      });
+      new BadRequest();
     }
   }
 
@@ -80,9 +78,7 @@ export class UserServices extends UserRepositories {
 
       res.status(200).send(getterUser);
     } catch (error) {
-      res.status(500).send({
-        message: "Internal Server Error!",
-      });
+      new DefaultError(500, "Internal server error!");
     }
   }
 
@@ -97,7 +93,7 @@ export class UserServices extends UserRepositories {
 
       res.status(200).send({ message: "Usuario atualizado com sucesso!" });
     } catch (error) {
-      res.status(500).send({ message: "Internal server error!" });
+      new DefaultError(500, "Internal server error!");
     }
   }
 
@@ -111,9 +107,7 @@ export class UserServices extends UserRepositories {
 
       res.status(200).send({ message: "Usuario deletado!" });
     } catch (error) {
-      res.status(500).send({
-        message: "Internal server error!",
-      });
+      new DefaultError(500, "Internal server error!");
     }
   }
 
@@ -145,9 +139,7 @@ export class UserServices extends UserRepositories {
       next();
       res.status(200).send({ message: "Logado" });
     } catch (error) {
-      res.status(400).send({
-        message: "Bad Request",
-      });
+      new BadRequest();
     }
   }
 }
