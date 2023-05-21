@@ -6,15 +6,17 @@ import { hash } from "bcrypt";
 export class UserRepositories implements IUserRepositories {
   constructor() {}
 
-  public async getUsers(): Promise<User[]> {
+  public async getUsers(take: number, skip: number): Promise<User[]> {
     const getUsers: User[] | any[] = await prisma.user.findMany({
       select: {
         id: true,
         name: true,
         email: true,
-        post: true,
+        post: false,
         password: false,
       },
+      take: take,
+      skip: skip,
     });
 
     prisma.user.count();

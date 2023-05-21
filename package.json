@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsx watch ./src/server.ts",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "test": "vitest"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",

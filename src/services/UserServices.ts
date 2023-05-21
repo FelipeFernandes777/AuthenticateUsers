@@ -24,14 +24,12 @@ export class UserServices extends UserRepositories {
         message: "As senhas não conferem",
       });
     }
-
-    if (userAlredyExists) {
-      res.status(422).send({
-        message: "Usuario já existe!",
-      });
-    }
-
     try {
+      if (userAlredyExists) {
+        res.status(422).send({
+          message: "Usuario já existe!",
+        });
+      }
       const userRepostitories = new UserRepositories();
 
       await userRepostitories.create(name, email, password);
@@ -43,10 +41,12 @@ export class UserServices extends UserRepositories {
   }
 
   public async getUser(req: Request, res: Response) {
+    const { take, skip } = req.body;
+
     try {
       const userRepostitories = new UserRepositories();
 
-      let user = await userRepostitories.getUsers();
+      let user = await userRepostitories.getUsers(take, skip);
 
       res.status(200).json(user);
     } catch (error) {

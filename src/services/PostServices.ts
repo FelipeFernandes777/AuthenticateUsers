@@ -24,12 +24,18 @@ export class PostServices extends PostRepositories {
     const { title, content, description, id } = req.body;
 
     try {
-      const postRepositories = new PostRepositories();
-
-      await postRepositories.create(title, content, description, id);
-      res.status(201).send({
-        message: "Post Criado",
-      });
+      if (title.length === 0 || content.length === 0) {
+        res.status(400).send({
+          status: "Error",
+          message: "Preencha os campos vazios",
+        });
+      } else {
+        const postRepositories = new PostRepositories();
+        await postRepositories.create(title, content, description, id);
+        res.status(201).send({
+          message: "Post Criado",
+        });
+      }
     } catch (error) {
       res.status(400).send({
         message: "Bad Request",

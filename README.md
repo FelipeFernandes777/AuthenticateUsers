@@ -53,6 +53,7 @@
 
 (X) Crud Posts <br/>
 (-) Criação de uma verificação de post <br/>
+(X) Paginação <br />
 (X) Vitest <br/>
 (-) Testar regras de negocio <br/>
 (-) Testar rotas <br/>
